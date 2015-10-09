@@ -1,0 +1,240 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../cloudstitch-spreadsheet/cloudstitch-spreadsheet.html">
+<!--
+An element that enables loading a css file, html file, javascript file, and data.
+
+Example:
+
+    <cloudstitch-box></cloudstitch-box>
+
+@group Cloudstitch
+@element cloudstitch-box
+@demo demo/index.html
+-->
+<dom-module id="cloudstitch-box">
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+    }
+  </style>
+  <template>
+    <iron-ajax id="styleLoader"
+      auto
+      on-response="_styleLoaderResponse"
+      handle-as="text"
+      url="[[styleUrl]]"
+      ></iron-ajax>
+    <iron-ajax id="scriptLoader"
+      auto
+      handle-as="text"
+      on-response="_scriptLoaderResponse"
+      url="[[scriptUrl]]"
+      ></iron-ajax>
+    <iron-ajax id="templateLoader"
+      auto
+      handle-as="text"
+      on-response="_templateLoaderResponse"
+      url="[[templateUrl]]"
+      ></iron-ajax>
+
+    <cloudstitch-spreadsheet 
+      autoload
+      id="sheet" 
+      user="[[user]]" 
+      app="[[app]]" 
+      label="[[label]]" 
+      projection="[[projection]]" 
+      content="{{data}}"></cloudstitch-spreadsheet>
+
+  </template>
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'cloudstitch-box',
+
+    properties: {
+      /**
+       * The user
+       */
+      user: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * The app
+       */
+      app: {
+        type: String,
+        value: ''
+      },
+
+      /**
+       * The spreadsheet label to load
+       */
+      label: {
+        type: String,
+        value: 'sheet'
+      },
+
+      /**
+       * The projection for that sheet
+       */
+      projection: {
+        type: String,
+        value: 'items'
+      },
+
+      /**
+       * The data for the template.
+       */
+      data: {
+        type: Object,
+        observer: '_dataLoaded'
+      },
+
+      /**
+       * The data for the template.
+       */
+      exports: {
+        type: Object,
+        value: function() {
+          return {};
+        },
+        observer: '_scriptLoaded'
+      },
+
+      /**
+       * The url for the style.
+       */
+      styleUrl: {
+        type: String,
+        computed: 'makeStyleUrl(user, app)'
+      },
+
+      /**
+       * The url for the script.
+       */
+      scriptUrl: {
+        type: String,
+        computed: 'makeScriptUrl(user, app)'
+      },
+
+      /**
+       * The url for the template.
+       */
+      templateUrl: {
+        type: String,
+        computed: 'makeTemplateUrl(user, app)'
+      }
+    },
+
+    makeStyleUrl: function(user, app) {
+      return "//apps.cloudstitch.io/" + user + "/" + app + "/styles.css";
+    },
+
+    makeScriptUrl: function(user, app) {
+      return "//apps.cloudstitch.io/" + user + "/" + app + "/scripts.js";
+    },
+
+    makeTemplateUrl: function(user, app) {
+      return "//apps.cloudstitch.io/" + user + "/" + app + "/widget.html";
+    },
+
+    _scriptLoaderResponse: function(r) {
+      var js = r.detail.response;
+      if (this.customFn) {
+        this.customFn = {exports: function() {}};
+      }
+      try {
+        var j = "(function() { var module = {}; " + js + "; return module })()";
+        this.customFn = eval(j);
+      } catch(e) {
+        this.customFn = {exports: function() {}};
+      }
+      if (typeof this.customFn.exports != 'function') {
+        console.log("Custom JS didn't seem to set module.exports");
+        this.customFn.exports = function() {};
+      }    
+      this.exports = this.customFn.exports;
+      // if (this.runCustomFnWhenLoad) {
+      //   this.runCustomScript();
+      // }
+      this._scriptLoaded = true;
+      this.maybeRender();
+    },
+
+    _styleLoaderResponse: function(r) {
+      var css = r.detail.response;
+      if (this.styleElement) {
+        Polymer.dom(this).removeChild(this.styleElement);
+        this.styleElement = null;
+      }
+      this.styleElement = document.createElement('style');
+      this.styleElement.innerHTML = css;
+      Polymer.dom(document.body).appendChild(this.styleElement);
+      this._styleLoaded = true;
+      this.maybeRender();
+    },
+
+    _templateLoaderResponse: function(r) {
+      if (r.detail.response) {
+        this.template = r.detail.response;
+      } else {
+        this.template = "<div></div>";
+      }
+      this._templateLoaded = true;
+      this.maybeRender();
+    },
+
+    _dataLoaded: function(r) {
+      this._theDataLoaded = true;
+      this.maybeRender();
+    },
+
+    // Element Lifecycle
+
+    ready: function() {
+      // `ready` is called after all elements have been configured, but
+      // propagates bottom-up. This element's children are ready, but parents
+      // are not.
+      //
+      // This is the point where you should make modifications to the DOM (when
+      // necessary), or kick off any processes the element wants to perform.
+    },
+
+    attached: function() {
+      // `attached` fires once the element and its parents have been inserted
+      // into a document.
+      //
+      // This is a good place to perform any work related to your element's
+      // visual state or active behavior (measuring sizes, beginning animations,
+      // loading resources, etc).
+    },
+
+    detached: function() {
+      // The analog to `attached`, `detached` fires when the element has been
+      // removed from a document.
+      //
+      // Use this to clean up anything you did in `attached`.
+    },
+
+    // Element Behavior
+    maybeRender: function() {
+      if (
+        (this._scriptLoaded === true) &&
+        (this._styleLoaded === true) &&
+        (this._templateLoaded === true) &&
+        (this._theDataLoaded === true)
+      ) {
+        this.fire('ready-for-render');
+      }
+    }
+  });
+
+</script>
