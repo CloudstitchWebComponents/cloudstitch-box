@@ -193,6 +193,9 @@ Example:
     },
 
     _dataLoaded: function(r) {
+      if (this.data == null) {
+        return;
+      }
       this._theDataLoaded = true;
       this.maybeRender();
     },
