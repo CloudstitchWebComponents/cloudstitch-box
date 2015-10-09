@@ -1,0 +1,30 @@
+{
+  "name": "cloudstitch-box",
+  "version": "1.0.3",
+  "authors": [
+    "Anonymous <ted@cloudstitch.com>"
+  ],
+  "description": "An element providing a wrapper for a Cloudstitch widget.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "cloudstitch",
+    "d3",
+    "visualization"
+  ],
+  "main": "cloudstitch-d3.html",
+  "license": "BSD",
+  "homepage": "https://github.com/CloudstitchWebComponents/cloudstitch-box/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "cloudstitch-spreadsheet": "CloudstitchWebComponents/cloudstitch-spreadsheet",
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

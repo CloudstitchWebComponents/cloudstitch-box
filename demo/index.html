@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Cloudstitch Box Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../cloudstitch-box.html">
+  </head>
+  <body unresolved>
+
+    <h2>cloudstitch-box example</h2>
+
+    <cloudstitch-box id="box" user="visualizations" app="d3-change-dot-plot">
+    </cloudstitch-box>
+
+    <script>
+      window.BOX = document.getElementById('box')
+      BOX.addEventListener('ready-for-render', function(e) {
+        debugger;
+      });
+    </script>
+
+  </body>
+</html>
