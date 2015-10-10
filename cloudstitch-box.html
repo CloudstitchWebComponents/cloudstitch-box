@@ -152,19 +152,12 @@ Example:
         this.customFn = {exports: function() {}};
       }
       try {
-        var j = "(function() { var module = {}; " + js + "; return module })()";
+        var j = "(function() { var module = {exports: {}}; " + js + "; return module })()";
         this.customFn = eval(j);
       } catch(e) {
         this.customFn = {exports: function() {}};
       }
-      if (typeof this.customFn.exports != 'function') {
-        console.log("Custom JS didn't seem to set module.exports");
-        this.customFn.exports = function() {};
-      }    
       this.exports = this.customFn.exports;
-      // if (this.runCustomFnWhenLoad) {
-      //   this.runCustomScript();
-      // }
       this._scriptLoaded = true;
       this.maybeRender();
     },
