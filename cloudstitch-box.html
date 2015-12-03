@@ -141,16 +141,21 @@ Example:
     },
 
     attached: function() {
+      var self = this;
       if (! this.forWebComponent) {
         this.$.templateLoader.generateRequest();
       } else {
         this.importHref(this.$.templateLoader.url, function(e) {
           // e.target.import is the import document ELEMENT!
-          this.template = e.target.import;
+          self.template = e.target.import;
+          self._templateLoaded = true;
+          self.maybeRender();
         }, function(e) {
           console.log(e);
-          this.template = document.createElement('div');
-        });            
+          self.template = document.createElement('div');
+          self._templateLoaded = true;
+          self.maybeRender();
+        });
       }
     },
 
