@@ -33,7 +33,6 @@ Example:
       url="[[scriptUrl]]"
       ></iron-ajax>
     <iron-ajax id="templateLoader"
-      auto
       handle-as="text"
       on-response="_templateLoaderResponse"
       url="[[templateUrl]]"
@@ -105,8 +104,7 @@ Example:
         type: Object,
         value: function() {
           return {};
-        },
-        observer: '_scriptLoaded'
+        }
       },
 
       /**
@@ -131,6 +129,28 @@ Example:
       templateUrl: {
         type: String,
         computed: 'makeTemplateUrl(user, app)'
+      },
+
+      forWebComponent: {
+        type: Boolean,
+        value: false
+      }
+    },
+
+    ready: function() {
+    },
+
+    attached: function() {
+      if (! this.forWebComponent) {
+        this.$.templateLoader.generateRequest();
+      } else {
+        this.importHref(this.$.templateLoader.url, function(e) {
+          // e.target.import is the import document ELEMENT!
+          this.template = e.target.import;
+        }, function(e) {
+          console.log(e);
+          this.template = document.createElement('div');
+        });            
       }
     },
 
@@ -194,24 +214,6 @@ Example:
     },
 
     // Element Lifecycle
-
-    ready: function() {
-      // `ready` is called after all elements have been configured, but
-      // propagates bottom-up. This element's children are ready, but parents
-      // are not.
-      //
-      // This is the point where you should make modifications to the DOM (when
-      // necessary), or kick off any processes the element wants to perform.
-    },
-
-    attached: function() {
-      // `attached` fires once the element and its parents have been inserted
-      // into a document.
-      //
-      // This is a good place to perform any work related to your element's
-      // visual state or active behavior (measuring sizes, beginning animations,
-      // loading resources, etc).
-    },
 
     detached: function() {
       // The analog to `attached`, `detached` fires when the element has been
