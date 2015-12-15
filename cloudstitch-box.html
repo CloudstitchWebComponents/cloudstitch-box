@@ -108,11 +108,43 @@ Example:
       },
 
       /**
+       * The domain from which to load the assets.
+       */
+      domain: {
+        type: String,
+        value: 'apps.cloudstitch.io'
+      },
+
+      /**
+       * The subpath of domain/user/app where the CSS lives.
+       */
+      styleFile: {
+        type: String,
+        value: 'styles.css'
+      },
+
+      /**
+       * The subpath of domain/user/app where the Javascript lives.
+       */
+      scriptFile: {
+        type: String,
+        value: 'scripts.js'
+      },
+
+      /**
+       * The subpath of domain/user/app where the HTML lives.
+       */
+      templateFile: {
+        type: String,
+        value: 'widget.html'
+      },
+
+      /**
        * The url for the style.
        */
       styleUrl: {
         type: String,
-        computed: 'makeStyleUrl(user, app)'
+        computed: 'makeStyleUrl(domain, user, app, styleFile)'
       },
 
       /**
@@ -120,7 +152,7 @@ Example:
        */
       scriptUrl: {
         type: String,
-        computed: 'makeScriptUrl(user, app)'
+        computed: 'makeScriptUrl(domain, user, app, scriptFile)'
       },
 
       /**
@@ -128,7 +160,7 @@ Example:
        */
       templateUrl: {
         type: String,
-        computed: 'makeTemplateUrl(user, app)'
+        computed: 'makeTemplateUrl(domain, user, app, templateFile)'
       },
 
       forWebComponent: {
@@ -159,16 +191,16 @@ Example:
       }
     },
 
-    makeStyleUrl: function(user, app) {
-      return "//apps.cloudstitch.io/" + user + "/" + app + "/styles.css";
+    makeStyleUrl: function(domain, user, app, styleFile) {
+      return "//" + domain + "/" + user + "/" + app + "/" + styleFile;
     },
 
-    makeScriptUrl: function(user, app) {
-      return "//apps.cloudstitch.io/" + user + "/" + app + "/scripts.js";
+    makeScriptUrl: function(domain, user, app, scriptFile) {
+      return "//" + domain + "/" + user + "/" + app + "/" + scriptFile;
     },
 
-    makeTemplateUrl: function(user, app) {
-      return "//apps.cloudstitch.io/" + user + "/" + app + "/widget.html";
+    makeTemplateUrl: function(domain, user, app, templateFile) {
+      return "//" + domain + "/" + user + "/" + app + "/" + templateFile;
     },
 
     _scriptLoaderResponse: function(r) {
