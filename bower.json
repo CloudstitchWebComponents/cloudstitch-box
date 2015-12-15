@@ -1,6 +1,6 @@
 {
   "name": "cloudstitch-box",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "authors": [
     "Anonymous <ted@cloudstitch.com>"
   ],
@@ -9,10 +9,9 @@
     "web-component",
     "polymer",
     "cloudstitch",
-    "d3",
     "visualization"
   ],
-  "main": "cloudstitch-d3.html",
+  "main": "cloudstitch-box.html",
   "license": "BSD",
   "homepage": "https://github.com/CloudstitchWebComponents/cloudstitch-box/",
   "ignore": [
@@ -20,8 +19,8 @@
     "/test/"
   ],
   "dependencies": {
-    "cloudstitch-spreadsheet": "CloudstitchWebComponents/cloudstitch-spreadsheet",
-    "polymer": "Polymer/polymer#^1.0.0"
+    "cloudstitch-spreadsheet": "CloudstitchWebComponents/cloudstitch-spreadsheet#^1.0.4",
+    "polymer": "Polymer/polymer#^1.2.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

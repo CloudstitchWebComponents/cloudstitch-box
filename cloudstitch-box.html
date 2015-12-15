@@ -45,6 +45,9 @@ Example:
       app="[[app]]" 
       label="[[label]]" 
       projection="[[projection]]" 
+      domain="[[domain]]"
+      worksheet="[[worksheet]]"
+      proto="[[proto]]"      
       content="{{data}}"></cloudstitch-spreadsheet>
 
   </template>
@@ -97,6 +100,7 @@ Example:
         observer: '_dataLoaded'
       },
 
+
       /**
        * The data for the template.
        */
@@ -113,6 +117,14 @@ Example:
       domain: {
         type: String,
         value: 'apps.cloudstitch.io'
+      },
+
+      /**
+       * The protocol to use
+       */
+      proto: {
+        type: String,
+        value: ''
       },
 
       /**
@@ -144,7 +156,7 @@ Example:
        */
       styleUrl: {
         type: String,
-        computed: 'makeStyleUrl(domain, user, app, styleFile)'
+        computed: 'makeStyleUrl(proto, domain, user, app, styleFile)'
       },
 
       /**
@@ -152,7 +164,7 @@ Example:
        */
       scriptUrl: {
         type: String,
-        computed: 'makeScriptUrl(domain, user, app, scriptFile)'
+        computed: 'makeScriptUrl(proto, domain, user, app, scriptFile)'
       },
 
       /**
@@ -160,7 +172,7 @@ Example:
        */
       templateUrl: {
         type: String,
-        computed: 'makeTemplateUrl(domain, user, app, templateFile)'
+        computed: 'makeTemplateUrl(proto, domain, user, app, templateFile)'
       },
 
       forWebComponent: {
@@ -192,15 +204,27 @@ Example:
     },
 
     makeStyleUrl: function(domain, user, app, styleFile) {
-      return "//" + domain + "/" + user + "/" + app + "/" + styleFile;
+      var protocol = '';        
+      if (proto) {
+        protocol = proto + ':';
+      }
+      return protocol + "//" + domain + "/" + user + "/" + app + "/" + styleFile;
     },
 
     makeScriptUrl: function(domain, user, app, scriptFile) {
-      return "//" + domain + "/" + user + "/" + app + "/" + scriptFile;
+      var protocol = '';        
+      if (proto) {
+        protocol = proto + ':';
+      }
+      return protocol + "//" + domain + "/" + user + "/" + app + "/" + scriptFile;
     },
 
     makeTemplateUrl: function(domain, user, app, templateFile) {
-      return "//" + domain + "/" + user + "/" + app + "/" + templateFile;
+      var protocol = '';        
+      if (proto) {
+        protocol = proto + ':';
+      }
+      return protocol + "//" + domain + "/" + user + "/" + app + "/" + templateFile;
     },
 
     _scriptLoaderResponse: function(r) {
