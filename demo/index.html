@@ -9,19 +9,38 @@
   </head>
   <body unresolved>
 
-    <h2>cloudstitch-box example</h2>
+    <h2>Loading for a manual embed</h2>
 
     <cloudstitch-box id="box" user="visualizations" app="d3-change-dot-plot">
     </cloudstitch-box>
 
+    <textarea id="style1"></textarea>
+    <textarea id="script1"></textarea>
+    <textarea id="template1"></textarea>
+
+    <h2>Loading for a web component</h2>
     <cloudstitch-box id="box2" user="project-templates" app="breaking-news-feed" for-web-component>
     </cloudstitch-box>
 
+    <textarea id="style2"></textarea>
+    <textarea id="script2"></textarea>
+    <textarea id="template2"></textarea>
+
     <script>
-      // window.BOX = document.getElementById('box')
-      // BOX.addEventListener('ready-for-render', function(e) {
-      //   debugger;
-      // });
+      window.BOX = document.getElementById('box')
+      BOX.addEventListener('ready-for-render', function(e) {
+        document.getElementById('script1').innerHTML = window.BOX.exports;
+        document.getElementById('style1').innerHTML = window.BOX.styleElement;
+        document.getElementById('template1').innerHTML = window.BOX.template;
+      });
+
+      window.BOX2 = document.getElementById('box2')
+      BOX2.addEventListener('ready-for-render', function(e) {
+        document.getElementById('script2').innerHTML = window.BOX2.exports;
+        document.getElementById('style2').innerHTML = window.BOX2.styleElement;
+        document.getElementById('template2').innerHTML = window.BOX2.template;
+      });
+
     </script>
 
   </body>
