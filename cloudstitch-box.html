@@ -39,13 +39,13 @@ Example:
       ></iron-ajax>
 
     <cloudstitch-spreadsheet 
-      autoload
+      auto
       id="sheet" 
       user="[[user]]" 
       app="[[app]]" 
       label="[[label]]" 
       projection="[[projection]]" 
-      domain="[[domain]]"
+      domain="[[dataDomain]]"
       worksheet="[[worksheet]]"
       proto="[[proto]]"      
       content="{{data}}"></cloudstitch-spreadsheet>
@@ -114,11 +114,18 @@ Example:
       /**
        * The domain from which to load the assets.
        */
-      domain: {
+      fileDomain: {
         type: String,
         value: 'apps.cloudstitch.io'
       },
 
+      /**
+       * The domain from which to load the data.
+       */
+      dataDomain: {
+        type: String,
+        value: 'api.cloudstitch.com'
+      },
       /**
        * The protocol to use
        */
@@ -156,7 +163,7 @@ Example:
        */
       styleUrl: {
         type: String,
-        computed: 'makeStyleUrl(proto, domain, user, app, styleFile)'
+        computed: 'makeStyleUrl(proto, fileDomain, user, app, styleFile)'
       },
 
       /**
@@ -164,7 +171,7 @@ Example:
        */
       scriptUrl: {
         type: String,
-        computed: 'makeScriptUrl(proto, domain, user, app, scriptFile)'
+        computed: 'makeScriptUrl(proto, fileDomain, user, app, scriptFile)'
       },
 
       /**
@@ -172,7 +179,7 @@ Example:
        */
       templateUrl: {
         type: String,
-        computed: 'makeTemplateUrl(proto, domain, user, app, templateFile)'
+        computed: 'makeTemplateUrl(proto, fileDomain, user, app, templateFile)'
       },
 
       forWebComponent: {
