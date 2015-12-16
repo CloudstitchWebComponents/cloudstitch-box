@@ -203,7 +203,7 @@ Example:
       }
     },
 
-    makeStyleUrl: function(domain, user, app, styleFile) {
+    makeStyleUrl: function(proto, domain, user, app, styleFile) {
       var protocol = '';        
       if (proto) {
         protocol = proto + ':';
@@ -211,7 +211,7 @@ Example:
       return protocol + "//" + domain + "/" + user + "/" + app + "/" + styleFile;
     },
 
-    makeScriptUrl: function(domain, user, app, scriptFile) {
+    makeScriptUrl: function(proto, domain, user, app, scriptFile) {
       var protocol = '';        
       if (proto) {
         protocol = proto + ':';
@@ -219,7 +219,7 @@ Example:
       return protocol + "//" + domain + "/" + user + "/" + app + "/" + scriptFile;
     },
 
-    makeTemplateUrl: function(domain, user, app, templateFile) {
+    makeTemplateUrl: function(proto, domain, user, app, templateFile) {
       var protocol = '';        
       if (proto) {
         protocol = proto + ':';
