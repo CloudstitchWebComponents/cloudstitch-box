@@ -1,6 +1,6 @@
 {
   "name": "cloudstitch-box",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "authors": [
     "Anonymous <ted@cloudstitch.com>"
   ],
@@ -19,7 +19,7 @@
     "/test/"
   ],
   "dependencies": {
-    "cloudstitch-spreadsheet": "CloudstitchWebComponents/cloudstitch-spreadsheet#^2.0.0",
+    "cloudstitch-spreadsheet": "CloudstitchWebComponents/cloudstitch-spreadsheet#^2.0.1",
     "polymer": "Polymer/polymer#^1.2.0"
   },
   "devDependencies": {
